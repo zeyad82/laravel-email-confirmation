@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers as BaseRegistersUsers;
 use Bestmomo\LaravelEmailConfirmation\Notifications\ConfirmEmail;
-use Illuminate\Console\DetectsApplicationNamespace;
 
 trait RegistersUsers
 {
-    use BaseRegistersUsers, DetectsApplicationNamespace;
+    use BaseRegistersUsers;
 
     /**
      * Handle a registration request for the application.
@@ -86,7 +85,7 @@ trait RegistersUsers
      */
     protected function notifyUser($user)
     {
-        $class = $this->getAppNamespace() . 'Notifications\ConfirmEmail';
+        $class = app()->getNamespace() . 'Notifications\ConfirmEmail';
 
         if (!class_exists($class)) {
             $class = ConfirmEmail::class;
